@@ -1,0 +1,85 @@
+import Link from "next/link";
+
+function SignUp() {
+  return (
+    <div className="h-full p-8 flex flex-col justify-evenly">
+      <p className="text-xs font-medium text-slate-700">
+        Already have an account?{" "}
+        <Link href="/auth/signin" className="text-blue-500">
+          Sign in
+        </Link>
+      </p>
+      <div className="py-3">
+        <h2 className="font-bold text-3xl mb-6">Create your account</h2>
+        <form>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col py-2">
+              <label
+                htmlFor="firstname"
+                className="text-xs text-slate-500 font-medium mb-2"
+              >
+                First name
+              </label>
+              <input
+                className="border px-2 py-2 rounded-md"
+                name="firstname"
+                id="firstname"
+                type="text"
+              />
+            </div>
+            <div className="flex flex-col py-2">
+              <label
+                htmlFor="lastname"
+                className="text-xs text-slate-500 font-medium mb-2"
+              >
+                Last name
+              </label>
+              <input
+                className="border px-2 py-2 rounded-md"
+                name="lastname"
+                id="lastname"
+                type="text"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col py-2">
+            <label
+              htmlFor="email"
+              className="text-xs text-slate-500 font-medium mb-2"
+            >
+              Email
+            </label>
+            <input
+              className="border px-2 py-2 rounded-md"
+              name="email"
+              id="email"
+              type="email"
+            />
+          </div>
+          <div className="flex flex-col py-2">
+            <label
+              htmlFor="password"
+              className="text-xs text-slate-500 font-medium mb-2"
+            >
+              Password
+            </label>
+            <input
+              className="border px-2 py-2 rounded-md"
+              name="password"
+              id="password"
+              type="password"
+            />
+          </div>
+          <input
+            type="submit"
+            value="Sign up"
+            className="bg-blue-500 w-full py-3 rounded-md mt-4 text-white font-medium text-sm cursor-pointer"
+          />
+        </form>
+      </div>
+      <div></div>
+    </div>
+  );
+}
+
+export default SignUp;
