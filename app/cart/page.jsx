@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { UserContext } from "../(context)/UserContext";
 import Navigation from "../(components)/Navigation";
 import useUpdateCart from "../(utils)/useUpdateCart";
-import { Trash } from "lucide-react";
 
 function Cart() {
   const { cart } = useContext(UserContext);

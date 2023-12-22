@@ -4,7 +4,7 @@ import Image from "next/image";
 function CategoryCard({ categoryId, image, alt, title }) {
   return (
     <Link href={`/shop/${categoryId}`}>
-      <div className=" w-72 h-72 rounded-lg overflow-hidden relative">
+      <div className=" w-72 h-72 overflow-hidden relative">
         <div className="h-full relative brightness-75">
           <Image
             src={image}

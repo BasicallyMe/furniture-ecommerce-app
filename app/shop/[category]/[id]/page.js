@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Heart,
@@ -7,15 +9,77 @@ import {
   Banknote,
   RefreshCw,
 } from "lucide-react";
+import useAddToCart from "@/app/(utils)/useAddToCart";
 
-function ProductPage({ data, params }) {
+/**
+ * Imports the getSingleProduct function from the Products module.
+ *
+ * The getSingleProduct function fetches a single product by ID from the database.
+ * It is used in this module to get the data for the product page.
+ */
+import { getSingleProduct } from "@/app/(context)/Products";
+
+function ProductPage({ params }) {
+  const [product, setProduct] = useState(null);
+  const [isItemAdded, addItemToCart] = useAddToCart();
+
+  /**
+   * Increases the quantity value of the product state by 1.
+   *
+   * Uses the prev state value and returns a new state object
+   * with quantity incremented by 1.
+   */
+  const increaseQuantity = () => {
+    setProduct((prev) => {
+      return {
+        ...prev,
+        quantity: prev.quantity + 1,
+      };
+    });
+  };
+
+  const decreaseQuantity = () => {
+    setProduct((prev) => {
+      return {
+        ...prev,
+        quantity: prev.quantity - 1,
+      };
+    });
+  };
+
+
+  /**
+   * Fetches the product data when the component mounts and when the id param changes.
+   * Calls the getSingleProduct async function to get the product data by id from the API.
+   * Displays a loading state while fetching.
+   * Saves the fetched product in the component's state.
+   */
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const product = await getSingleProduct(params.id);
+      product.quantity = 1;
+      setProduct(product);
+    };
+
+    fetchProduct();
+  }, [params.id]);
+
+  if (product === null) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-purple-600" />
+        <p className="mt-4 text-sm font-medium">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="">
-      <div className="flex flex-row gap-6 px-7 py-6">
-        <div className="w-1/2 min-h-screen">
+      <div className="flex flex-row xs:flex-wrap sm:flex-wrap lg:flex-nowrap gap-6 px-7 py-6">
+        <div className="w-1/2 sm:w-full min-h-screen">
           <div className="h-full relative">
             <Image
-              src="https://images.unsplash.com/photo-1592078615290-033ee584e267?crop=entropy&cs=srgb&fm=jpg&ixid=M3w1Mjk5Njd8MHwxfGFsbHx8fHx8fHx8fDE3MDIxNDM5MzN8&ixlib=rb-4.0.3&q=85"
+              src={product.full}
               alt="Photo of a furniture"
               fill
               objectPosition="center"
@@ -23,18 +87,16 @@ function ProductPage({ data, params }) {
             />
           </div>
         </div>
-        <div className="w-1/2 px-6">
+        <div className="w-1/2 sm:w-full sm:pt-6 px-6">
           <div className="mb-4">
-            <h2 className="text-xl font-medium">
-              Matte Black & Gold Self Design Handcrafted Table Lamp with Shade
-            </h2>
+            <h2 className="text-xl font-medium">{product.name}</h2>
             <span className="text-sm text-slate-400 font-medium">
-              By Homesake
+              {`By ${product.manufacturer}`}
             </span>
           </div>
           <div className="mb-3">
             <div className="flex flex-row items-center gap-2">
-              <h4 className="font-medium ">$2150.00</h4>
+              <h4 className="font-medium ">$ {`${product.price}`}</h4>
               <h5 className="text-sm font-medium line-through text-slate-300">
                 $2970.00
               </h5>
@@ -47,18 +109,25 @@ function ProductPage({ data, params }) {
           <div className="flex flex-row items-center gap-2 my-4">
             <span className="text-sm font-medium">Quantity</span>
             <div className="flex flex-row gap-2 items-center">
-              <button className="w-7 h-7 bg-slate-200 font-medium flex items-center justify-center">
+              <button
+                disabled={product.quantity <= 1}
+                onClick={decreaseQuantity}
+                className="w-7 h-7 bg-blue-500 disabled:bg-slate-200 text-white font-medium flex items-center justify-center"
+              >
                 -
               </button>
-              <div className="px-1">5</div>
-              <button className="w-7 h-7 bg-slate-200 font-medium flex items-center justify-center">
+              <div className="px-1">{product.quantity}</div>
+              <button
+                onClick={increaseQuantity}
+                className="w-7 h-7 bg-blue-500 disabled:bg-slate-200 text-white font-medium flex items-center justify-center"
+              >
                 +
               </button>
             </div>
           </div>
           <div className="mt-6 mb-4">
             <div className="flex flex-row gap-3">
-              <button className="uppercase bg-blue-500 text-sm font-medium text-white px-3 py-2 w-full">
+              <button onClick={() => addItemToCart(product)} className="uppercase bg-blue-500 text-sm font-medium text-white px-3 py-2 w-full">
                 Add to cart
               </button>
               <button className="uppercase border border-blue-500 text-sm font-medium px-3 py-2 w-full text-blue-500">
@@ -75,11 +144,11 @@ function ProductPage({ data, params }) {
               Eligible for Delivery?
             </h4>
             <div className="flex flex-row gap-2">
-              <div className="bg-red-400 flex flex-row items-center">
+              <div className="flex flex-row items-center">
                 <input
                   name="pin_code"
                   id="pin-code"
-                  className="h-full bg-slate-100 px-3"
+                  className="h-full max-h-8 bg-slate-100 px-3"
                 />
                 <button className="bg-blue-500 text-white py-2 px-2">
                   <ArrowRight size={16} />

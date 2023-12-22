@@ -15,7 +15,7 @@ function ProductCard({ data }) {
   }
   return (
     <div
-      className="w-52 relative rounded-lg bg-blue-50 overflow-hidden cursor-pointer"
+      className="w-52 relative bg-blue-50 overflow-hidden cursor-pointer"
       onClick={() => router.push(`${pathname}/${data.id}`)}
     >
       <div className="relative w-full h-48">
@@ -35,7 +35,7 @@ function ProductCard({ data }) {
           <span className="text-sm font-semibold">$ {data.price}</span>
           <button
             onClick={(e) => handleAddToCart(e, data)}
-            className="py-2 px-3 rounded-md text-xs font-medium bg-blue-500 hover:bg-blue-600 transition-colors text-white"
+            className="py-2 px-3 text-xs font-medium bg-blue-500 hover:bg-blue-600 transition-colors text-white"
           >
             Add to bag
           </button>
