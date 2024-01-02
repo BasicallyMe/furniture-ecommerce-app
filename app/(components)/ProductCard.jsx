@@ -15,7 +15,7 @@ function ProductCard({ data }) {
   }
   return (
     <div
-      className="w-52 relative bg-blue-50 overflow-hidden cursor-pointer"
+      className="w-52 relative overflow-hidden cursor-pointer"
       onClick={() => router.push(`${pathname}/${data.id}`)}
     >
       <div className="relative w-full h-48">

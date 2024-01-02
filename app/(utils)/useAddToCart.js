@@ -12,6 +12,10 @@ export default function useAddToCart() {
   const [isItemAdded, setIsItemAdded] = useState(false);
   const { cart, setCart } = useContext(UserContext);
 
+  const updateLocalStorage = (updatedCart) => {
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
   const addItemToCart = (item) => {
     // Check if the item is already in the cart
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
@@ -29,12 +33,18 @@ export default function useAddToCart() {
         return cartItem;
       });
       setCart((prevCart) => {
-        return updatedCart
+        return updatedCart;
       });
+      updateLocalStorage(updatedCart);
     } else {
-      // If the item is not in the cart, add it with quantity 1
+      /**
+       * Updates the cart state by concatenating the previous cart with the new item.
+       * Also updates localStorage to persist the updated cart.
+       */
       setCart((prevCart) => {
-        return [...prevCart, item];
+        const updatedCart = [...prevCart, item];
+        updateLocalStorage(updatedCart);
+        return updatedCart;
       });
     }
   };

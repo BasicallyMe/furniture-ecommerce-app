@@ -1,13 +1,15 @@
 "use client";
 import Image from "next/image";
-import { useContext } from "react";
-import { UserContext } from "../(context)/UserContext";
+import { useEffect } from "react";
+import useGetCart from "../(utils)/useGetCart";
+import useAddToCart from "../(utils)/useAddToCart";
 import Navigation from "../(components)/Navigation";
 import useUpdateCart from "../(utils)/useUpdateCart";
 
 function Cart() {
-  const { cart } = useContext(UserContext);
+  const { getCart, cart } = useGetCart();
   const { updateCart } = useUpdateCart();
+  const [isItemAdded, addItemToCart] = useAddToCart();
 
   function increaseQuantity(item) {
     const updatedCart = cart.map((cartItem) => {
@@ -31,6 +33,10 @@ function Cart() {
     const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id);
     updateCart(updatedCart);
   }
+
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
 
   if (cart.length === 0) {
     return (
@@ -66,7 +72,10 @@ function Cart() {
                 </div>
                 <div className="col-span-5 pl-4">
                   <h4 className="font-semibold">{item.name}</h4>
-                  <button onClick={() => deleteItem(item)} className="text-xs mr-3 text-red-500 font-medium hover:underline underline-offset-2">
+                  <button
+                    onClick={() => deleteItem(item)}
+                    className="text-xs mr-3 text-red-500 font-medium hover:underline underline-offset-2"
+                  >
                     Delete
                   </button>
                   <button className="text-xs text-slate-500 font-medium hover:underline underline-offset-2">
@@ -77,7 +86,11 @@ function Cart() {
                   <span className="text-sm font-medium">$ {item.price}</span>
                 </div>
                 <div className="flex flex-row gap-2 items-center col-span-1">
-                  <button disabled={item.quantity <= 1} onClick={() => decreaseQuantity(item)} className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center disabled:bg-slate-300">
+                  <button
+                    disabled={item.quantity <= 1}
+                    onClick={() => decreaseQuantity(item)}
+                    className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center disabled:bg-slate-300"
+                  >
                     -
                   </button>
                   <div className="px-1 text-sm font-medium">
