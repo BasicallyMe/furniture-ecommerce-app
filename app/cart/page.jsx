@@ -13,7 +13,7 @@ function Cart() {
 
   function increaseQuantity(item) {
     const updatedCart = cart.map((cartItem) => {
-      return cartItem.id === item.id
+      return cartItem?.id === item?.id
         ? { ...cartItem, quantity: cartItem.quantity + 1 }
         : cartItem;
     });
@@ -22,7 +22,7 @@ function Cart() {
 
   function decreaseQuantity(item) {
     const updatedCart = cart.map((cartItem) => {
-      return cartItem.id === item.id
+      return cartItem?.id === item?.id
         ? { ...cartItem, quantity: cartItem.quantity - 1 }
         : cartItem;
     });
@@ -58,7 +58,7 @@ function Cart() {
           <div className="w-3/4 px-4">
             {cart.map((item) => (
               <div
-                key={item.id}
+                key={item?.id}
                 className="w-full py-2 px-4 mb-2 grid grid-cols-9 items-center"
               >
                 <div className="w-24 h-24 relative mr-2 col-span-1">

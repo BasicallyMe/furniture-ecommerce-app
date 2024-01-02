@@ -24,7 +24,7 @@ export default function useAddToCart() {
       // If the item is already in the cart, throw an error
       // throw new Error('Item already exists in cart');
       const updatedCart = cart.map((cartItem) => {
-        if (cartItem.id === item.id) {
+        if (cartItem?.id === item?.id) {
           return {
             ...cartItem,
             quantity: cartItem.quantity + item.quantity,

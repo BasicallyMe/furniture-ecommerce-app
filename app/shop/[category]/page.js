@@ -19,7 +19,7 @@ function Category({ params }) {
       {products.length !== 0 && (
         <div className="flex flex-wrap gap-4">
           {products.map((item, i) => (
-            <ProductCard key={item.id} data={item} />
+            <ProductCard key={item?.id} data={item} />
           ))}
         </div>
       )}
