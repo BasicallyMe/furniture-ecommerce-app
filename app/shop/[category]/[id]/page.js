@@ -10,6 +10,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import useAddToCart from "@/app/(utils)/useAddToCart";
+import useAddToWishlist from "@/app/(utils)/useAddToWishlist";
 
 /**
  * Imports the getSingleProduct function from the Products module.
@@ -21,7 +22,8 @@ import { getSingleProduct } from "@/app/(context)/Products";
 
 function ProductPage({ params }) {
   const [product, setProduct] = useState(null);
-  const [isItemAdded, addItemToCart] = useAddToCart();
+  const [addItemToCart] = useAddToCart();
+  const [addItemToWishlist] = useAddToWishlist();
 
   /**
    * Increases the quantity value of the product state by 1.
@@ -46,8 +48,6 @@ function ProductPage({ params }) {
       };
     });
   };
-
-
   /**
    * Fetches the product data when the component mounts and when the id param changes.
    * Calls the getSingleProduct async function to get the product data by id from the API.
@@ -127,14 +127,20 @@ function ProductPage({ params }) {
           </div>
           <div className="mt-6 mb-4">
             <div className="flex flex-row gap-3">
-              <button onClick={() => addItemToCart(product)} className="uppercase bg-blue-500 text-sm font-medium text-white px-3 py-2 w-full">
+              <button
+                onClick={() => addItemToCart(product)}
+                className="uppercase bg-blue-500 text-sm font-medium text-white px-3 py-2 w-full"
+              >
                 Add to cart
               </button>
               <button className="uppercase border border-blue-500 text-sm font-medium px-3 py-2 w-full text-blue-500">
                 Buy now
               </button>
             </div>
-            <button className="flex flex-row items-center text-xs font-medium text-slate-400 hover:text-slate-700 transition-colors py-2 gap-1">
+            <button
+              onClick={() => addItemToWishlist(product)}
+              className="flex flex-row items-center text-xs font-medium text-slate-400 hover:text-slate-700 transition-colors py-2 gap-1"
+            >
               <Heart size={12} strokeWidth={2.5} />
               Add to wishlist
             </button>

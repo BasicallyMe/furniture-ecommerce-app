@@ -1,15 +1,12 @@
 "use client";
 import Image from "next/image";
-import { useEffect } from "react";
 import useGetCart from "../(utils)/useGetCart";
-import useAddToCart from "../(utils)/useAddToCart";
 import Navigation from "../(components)/Navigation";
 import useUpdateCart from "../(utils)/useUpdateCart";
 
 function Cart() {
-  const { getCart, cart } = useGetCart();
+  const { cart } = useGetCart();
   const { updateCart } = useUpdateCart();
-  const [isItemAdded, addItemToCart] = useAddToCart();
 
   function increaseQuantity(item) {
     const updatedCart = cart.map((cartItem) => {
@@ -33,10 +30,6 @@ function Cart() {
     const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id);
     updateCart(updatedCart);
   }
-
-  useEffect(() => {
-    getCart();
-  }, [getCart]);
 
   if (cart.length === 0) {
     return (

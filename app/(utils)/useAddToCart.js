@@ -10,11 +10,8 @@ import { UserContext } from "../(context)/UserContext";
 
 export default function useAddToCart() {
   const [isItemAdded, setIsItemAdded] = useState(false);
-  const { cart, setCart } = useContext(UserContext);
-
-  const updateLocalStorage = (updatedCart) => {
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-  };
+  const { cartState } = useContext(UserContext);
+  const [cart, setCart] = cartState;
 
   const addItemToCart = (item) => {
     // Check if the item is already in the cart
@@ -35,7 +32,6 @@ export default function useAddToCart() {
       setCart((prevCart) => {
         return updatedCart;
       });
-      updateLocalStorage(updatedCart);
     } else {
       /**
        * Updates the cart state by concatenating the previous cart with the new item.
@@ -43,11 +39,10 @@ export default function useAddToCart() {
        */
       setCart((prevCart) => {
         const updatedCart = [...prevCart, item];
-        updateLocalStorage(updatedCart);
         return updatedCart;
       });
     }
   };
 
-  return [isItemAdded, addItemToCart];
+  return [addItemToCart];
 }

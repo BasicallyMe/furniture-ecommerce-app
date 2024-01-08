@@ -3,13 +3,12 @@ import Image from "next/image";
 import Banner from "../public/Banner.jpg";
 import CategoryCard from "./(components)/CategoryCard";
 import Navigation from "./(components)/Navigation";
-import Link from "next/link";
 
 const Home = () => {
   return (
     <div className="min-h-full">
       <Navigation />
-      <main className="bg-red-300 h-3/4">
+      <main className="h-3/4">
         <div className="relative h-full">
           <Image
             src={Banner}

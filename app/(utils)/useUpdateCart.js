@@ -7,7 +7,8 @@ import { useContext } from "react";
 import { UserContext } from "../(context)/UserContext";
 
 export default function useUpdateCart() {
-  const { setCart } = useContext(UserContext);
+    const { cartState } = useContext(UserContext);
+    const [cart, setCart] = cartState;
 
   const updateCart = (items) => {
     setCart(items);

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "eslint-plugin-react-hooks": "^4.6.0",
     "lucide-react": "^0.292.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",

@@ -2,9 +2,8 @@ import { useContext } from "react";
 import { UserContext } from "../(context)/UserContext";
 
 export default function useGetCart() {
-    const { cart } = useContext(UserContext);
+      const { cartState } = useContext(UserContext);
+      const [cart, setCart] = cartState;
 
-    const getCart = () => {}
-
-    return { getCart, cart }
+    return { cart }
 }
