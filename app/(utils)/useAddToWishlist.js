@@ -12,8 +12,6 @@ export default function useAddToWishlist() {
   const { wishlistState } = useContext(UserContext);
   const [wishlist, setWishlist] = wishlistState;
 
-
-
   const addItemToWishlist = (itemToWishlist) => {
     const existingItem = wishlist.find((item) => item.id === itemToWishlist.id);
 

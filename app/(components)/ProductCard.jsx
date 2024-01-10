@@ -27,7 +27,7 @@ function ProductCard({ data }) {
           fill
         />
       </div>
-      <div className="p-3">
+      <div className=" py-3">
         <div className="text-sm font-medium mb-3">
           <h3 className="truncate">{data.name}</h3>
         </div>

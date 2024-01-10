@@ -5,7 +5,7 @@ import Navigation from "../(components)/Navigation";
 import useUpdateCart from "../(utils)/useUpdateCart";
 
 function Cart() {
-  const { cart } = useGetCart();
+  const [cart] = useGetCart();
   const { updateCart } = useUpdateCart();
 
   function increaseQuantity(item) {
@@ -44,7 +44,7 @@ function Cart() {
     <div>
       <Navigation renderOptions={false} />
       <div>
-        <div className="py-3 my-3 px-4">
+        <div className="py-3 my-3 px-6">
           <h2 className="text-2xl font-semibold">Your cart</h2>
         </div>
         <div className="flex flex-row">
