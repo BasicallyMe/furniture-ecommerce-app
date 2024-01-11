@@ -1,14 +1,24 @@
 "use client";
 import Image from "next/image";
 import useGetWishlist from "../(utils)/useGetWishlist";
+import useDeleteFromWishlist from "../(utils)/useDeleteFromWishlist";
+import useAddToCart from "../(utils)/useAddToCart";
 import Navigation from "../(components)/Navigation";
 import { X } from 'lucide-react'
 
 function Wishlist() {
   const [wishlist] = useGetWishlist();
+  const [deleteFromWishlist] = useDeleteFromWishlist();
+  const [addItemToCart] = useAddToCart();
+
+  function handleAddToCart(item) {
+    item.quantity = 1;
+    addItemToCart(item);
+    deleteFromWishlist(item.id);
+  }
   return (
     <div>
-      <Navigation renderOptions={false} />
+      <Navigation renderOptions={true} />
       <div className="py-3 px-6">
         <div className="mb-10">
           <h2 className="text-lg font-semibold">
@@ -38,6 +48,9 @@ function Wishlist() {
                 <div className="py-2">
                   <span className="font-semibold">{`$ ${item.price}`}</span>
                 </div>
+                <button onClick={() => handleAddToCart(item)} className="border border-blue-500 w-full text-sm py-2 text-blue-500 font-medium">
+                  Move to cart
+                </button>
               </div>
             </div>
           ))}

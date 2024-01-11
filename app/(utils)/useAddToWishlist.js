@@ -17,6 +17,7 @@ export default function useAddToWishlist() {
 
     if (existingItem) {
       console.log("item already in wishlist", existingItem);
+      throw new Error("Item already in wishlist");
     } else {
       setWishlist((prevWishlist) => {
         const updatedWishlist = [...prevWishlist, itemToWishlist];

@@ -3,10 +3,12 @@ import Image from "next/image";
 import useGetCart from "../(utils)/useGetCart";
 import Navigation from "../(components)/Navigation";
 import useUpdateCart from "../(utils)/useUpdateCart";
+import useAddToWishlist from "../(utils)/useAddToWishlist";
 
 function Cart() {
   const [cart] = useGetCart();
   const { updateCart } = useUpdateCart();
+  const [addItemToWishlist] = useAddToWishlist();
 
   function increaseQuantity(item) {
     const updatedCart = cart.map((cartItem) => {
@@ -26,8 +28,11 @@ function Cart() {
     updateCart(updatedCart);
   }
 
-  function deleteItem(item) {
-    const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id);
+  function cartReducer(item, action = 'DELETE') {
+    if (action === "SAVE_TO_WISHLIST") {
+      addItemToWishlist(item);
+    }
+    const updatedCart = cart.filter((cartItem) => cartItem.id !==  item.id);
     updateCart(updatedCart);
   }
 
@@ -66,13 +71,13 @@ function Cart() {
                 <div className="col-span-5 pl-4">
                   <h4 className="font-semibold">{item.name}</h4>
                   <button
-                    onClick={() => deleteItem(item)}
+                    onClick={() => cartReducer(item, "DELETE")}
                     className="text-xs mr-3 text-red-500 font-medium hover:underline underline-offset-2"
                   >
                     Delete
                   </button>
-                  <button className="text-xs text-slate-500 font-medium hover:underline underline-offset-2">
-                    Add to wishlist
+                  <button onClick={() => cartReducer(item, "SAVE_TO_WISHLIST")} className="text-xs text-slate-500 font-medium hover:underline underline-offset-2">
+                    Save for later
                   </button>
                 </div>
                 <div className="col-span-1">

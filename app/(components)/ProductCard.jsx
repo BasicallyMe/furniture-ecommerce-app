@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import useAddToCart from "../(utils)/useAddToCart";
 
 function ProductCard({ data }) {
-  const [isItemAdded, addItemToCart] = useAddToCart();
+  const [addItemToCart] = useAddToCart();
   const pathname = usePathname();
   const router = useRouter();
   const handleAddToCart = (e, data) => {
