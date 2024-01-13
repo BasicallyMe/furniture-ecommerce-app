@@ -37,7 +37,7 @@ function Wishlist() {
                   className="object-cover h-full w-full"
                   fill
                 />
-                <button className="absolute top-2 right-2 bg-slate-200 rounded-full p-1">
+                <button onClick={() => deleteFromWishlist(item.id)} className="absolute top-2 right-2 bg-slate-200 rounded-full p-1">
                   <X size={20} strokeWidth={1.25} />
                 </button>
               </div>

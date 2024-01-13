@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.0.16",
     "eslint-plugin-react-hooks": "^4.6.0",
     "lucide-react": "^0.292.0",
     "mongodb": "^6.3.0",

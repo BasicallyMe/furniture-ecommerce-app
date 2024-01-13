@@ -146,15 +146,15 @@ function ProductPage({ params }) {
             </button>
           </div>
           <div>
-            <h4 className="mb-2 text-xs font-semibold">
-              Eligible for Delivery?
+            <h4 className="mb-2 text-xs text-slate-600 font-medium">
+              Eligible for Delivery ?
             </h4>
             <div className="flex flex-row gap-2">
               <div className="flex flex-row items-center">
                 <input
                   name="pin_code"
                   id="pin-code"
-                  className="h-full max-h-8 bg-slate-100 px-3"
+                  className="h-full max-h-8 bg-slate-50 px-3"
                 />
                 <button className="bg-blue-500 text-white py-2 px-2">
                   <ArrowRight size={16} />
