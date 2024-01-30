@@ -1,14 +1,22 @@
-"use client";
-import { useEffect, useState } from "react";
 import ProductCard from "@/app/(components)/ProductCard";
-import { getProducts } from "@/app/(context)/Products";
 
-function Category({ params }) {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    const fetchedProducts = getProducts(params.category);
-    setProducts(fetchedProducts);
-  }, [params.category]);
+const getProducts = async (category) => {
+  try {
+    const res = await fetch(`http://localhost:3000/shop/${category}/api`, {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+      },
+    });
+    return res.json();
+  } catch (error) {
+    console.log('Failed to get tickets', error);
+  }
+}
+
+const Category = async ({ params }) => {
+  const {products} = await getProducts(params.category);
+
   return (
     <div className="px-6 py-4">
       <div className="mb-3">
@@ -19,7 +27,7 @@ function Category({ params }) {
       {products.length !== 0 && (
         <div className="flex flex-wrap gap-4">
           {products.map((item, i) => (
-            <ProductCard key={item?.id} data={item} />
+            <ProductCard key={item?._id} data={item} />
           ))}
         </div>
       )}

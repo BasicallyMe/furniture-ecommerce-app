@@ -23,13 +23,14 @@ function ProductCard({ data }) {
   };
 
   function isInWishlist() {
-    return wishlist.some((wishlistItem) => wishlistItem.id === data.id);
+    console.log('calling check', data.id);
+    return wishlist.some((wishlistItem) => wishlistItem._id === data._id);
   }
 
   return (
     <div
       className="w-52 relative overflow-hidden cursor-pointer"
-      onClick={() => router.push(`${pathname}/${data.id}`)}
+      onClick={() => router.push(`${pathname}/${data._id}`)}
     >
       <div className="relative w-full h-48">
         <Image
@@ -44,7 +45,7 @@ function ProductCard({ data }) {
             className="absolute top-2 right-2 flex items-center justify-center h-6 w-6 bg-slate-50 rounded-full"
             onClick={(e) => {
               e.stopPropagation();
-              deleteFromWishlist(data.id)
+              deleteFromWishlist(data._id)
             }}
           >
             <Heart
