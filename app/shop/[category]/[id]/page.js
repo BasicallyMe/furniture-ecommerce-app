@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -10,12 +10,14 @@ import {
   Banknote,
   RefreshCw,
 } from "lucide-react";
+import useGetWishlist from "@/app/(utils)/useGetWishlist";
 import useAddToCart from "@/app/(utils)/useAddToCart";
 import useAddToWishlist from "@/app/(utils)/useAddToWishlist";
+import useDeleteFromWishlist from "@/app/(utils)/useDeleteFromWishlist";
 
 async function getProduct(params) {
   try {
-    const res = await fetch(
+    let res = await fetch(
       `http://localhost:3000/shop/${params.category}/${params.id}/api`,
       {
         method: "GET",
@@ -26,7 +28,7 @@ async function getProduct(params) {
     );
     return res.json();
   } catch (error) {
-    console.log("Failed to get tickets", error);
+    console.log("Failed to get product", error);
   }
 }
 
@@ -34,6 +36,8 @@ function ProductPage({ params }) {
   const [product, setProduct] = useState(null);
   const [addItemToCart] = useAddToCart();
   const [addItemToWishlist] = useAddToWishlist();
+  const [deleteFromWishlist] = useDeleteFromWishlist();
+  const [wishlist] = useGetWishlist();
 
   /**
    * Increases the quantity value of the product state by 1.
@@ -59,6 +63,10 @@ function ProductPage({ params }) {
     });
   };
 
+  function isInWishlist() {
+    return wishlist.some((wishlistItem) => wishlistItem._id === product._id);
+  }
+
   useEffect(() => {
     async function fetchData() {
       const { product } = await getProduct(params);
@@ -76,7 +84,6 @@ function ProductPage({ params }) {
       </div>
     );
   }
-
 
   return (
     <div className="">
@@ -126,6 +133,7 @@ function ProductPage({ params }) {
                 </button>
                 <div className="px-1">{product.quantity}</div>
                 <button
+                  disabled={product.quantity >= 4}
                   onClick={increaseQuantity}
                   className="w-7 h-7 bg-blue-500 disabled:bg-slate-200 text-white font-medium flex items-center justify-center"
                 >
@@ -146,11 +154,26 @@ function ProductPage({ params }) {
                 </button>
               </div>
               <button
-                onClick={() => addItemToWishlist(product)}
+                onClick={() => {
+                  if (isInWishlist()) {
+                    deleteFromWishlist(product._id);
+                  } else {
+                    addItemToWishlist(product);
+                  }
+                }}
                 className="flex flex-row items-center text-xs font-medium text-slate-400 hover:text-slate-700 transition-colors py-2 gap-1"
               >
-                <Heart size={12} strokeWidth={2.5} />
-                Add to wishlist
+                {isInWishlist() ? (
+                  <>
+                    <Heart size={12} strokeWidth={0} fill="#f33939" />
+                    <span className="text-red-400">Remove from wishlist</span>
+                  </>
+                ) : (
+                  <>
+                    <Heart size={12} strokeWidth={2.5} />
+                    Add to wishlist
+                  </>
+                )}
               </button>
             </div>
             <div>

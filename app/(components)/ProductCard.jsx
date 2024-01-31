@@ -23,7 +23,6 @@ function ProductCard({ data }) {
   };
 
   function isInWishlist() {
-    console.log('calling check', data.id);
     return wishlist.some((wishlistItem) => wishlistItem._id === data._id);
   }
 

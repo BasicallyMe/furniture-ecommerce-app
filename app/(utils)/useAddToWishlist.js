@@ -13,11 +13,10 @@ export default function useAddToWishlist() {
   const [wishlist, setWishlist] = wishlistState;
 
   const addItemToWishlist = (itemToWishlist) => {
-    const existingItem = wishlist.find((item) => item.id === itemToWishlist.id);
+    const existingItem = wishlist.find((item) => item._id === itemToWishlist._id);
 
     if (existingItem) {
-      console.log("item already in wishlist", existingItem);
-      throw new Error("Item already in wishlist");
+      
     } else {
       setWishlist((prevWishlist) => {
         const updatedWishlist = [...prevWishlist, itemToWishlist];

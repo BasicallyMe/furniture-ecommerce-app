@@ -11,7 +11,7 @@ export default function useDeleteFromWishlist() {
   const [wishlist, setWishlist] = wishlistState;
 
   const deleteFromWishlist = (id) => {
-    const updatedItems = wishlist.filter((item) => item.id !== id);
+    const updatedItems = wishlist.filter((item) => item._id !== id);
     localStorage.setItem('wishlist', JSON.stringify(updatedItems));
     setWishlist(() => 
       updatedItems
