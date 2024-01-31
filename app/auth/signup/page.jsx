@@ -2,15 +2,9 @@ import Link from "next/link";
 
 function SignUp() {
   return (
-    <div className="h-full p-8 flex flex-col justify-evenly">
-      <p className="text-xs font-medium text-slate-700">
-        Already have an account?{" "}
-        <Link href="/auth/signin" className="text-blue-500">
-          Sign in
-        </Link>
-      </p>
-      <div className="py-3">
-        <h2 className="font-bold text-3xl mb-6">Create your account</h2>
+    <div className="h-full p-8 flex flex-row items-center">
+      <div className="w-full">
+        <h2 className="font-bold text-3xl mb-6 text-blue-600">Create your account</h2>
         <form>
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col py-2">
@@ -73,11 +67,24 @@ function SignUp() {
           <input
             type="submit"
             value="Sign up"
-            className="bg-blue-500 w-full py-3 rounded-md mt-4 text-white font-medium text-sm cursor-pointer"
+            className="bg-blue-500 w-full py-2 rounded-md mt-4 text-white font-medium text-sm cursor-pointer"
           />
         </form>
       </div>
-      <div></div>
+      <div className="h-48 w-px bg-slate-300 mx-7" />
+      <div className="w-full ">
+        <h2 className="font-bold text-2xl mb-2 text-blue-500">Already a customer?</h2>
+        <p className="text-slate-500 text-xs font-medium">
+          Your wishlist is just a few clicks away. Head to our{" "}
+          <Link
+            className="text-blue-600 hover:underline hover:underline-offset-2"
+            href="/auth/signin"
+          >
+            Sign In
+          </Link>{" "}
+          page.
+        </p>
+      </div>
     </div>
   );
 }
